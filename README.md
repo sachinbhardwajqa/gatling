@@ -47,7 +47,7 @@ Check first commit
 Run using :
 - mvn clean               // Clean the project
 - mvn clean test-compile gatling:test      // Run the Gatling test
-- mvn clean test-compile gatling:test -Dgatling.simulationClass=perf.gatling.tests.<directoryOfProject>.<simulationClass>     // Run the specific Gatling test
+- mvn clean test-compile gatling:test -Dgatling.simulationClass=<packageName>.<directoryOfProject>.<simulationClass>     // Run the specific Gatling test
 
 Gatling supported protocol list below
 - HTTP        
@@ -61,4 +61,28 @@ Every gatling script consist of three distinct parts
 - ScenarioBuilder ( These are the actual steps which need to be performed )
 - setUp  ( Load Simulation Design)
 
+Feeders in Gatling (While reading the data, either of # or $ can be used to access the data, Syntax : ${columnName} or #{columnName} )
 
+CSV Feeder ( CSV file with data )       
+Syntax Example :        
+FeederBuilder.Batchable feeder1 = csv("filename.csv").circular(), csv("filename.csv").random()
+
+
+Open and Closed Workload Models in Gatling
+Closed Workload Model : Gatling will keep the number of users constant throughout the test duration.
+Examples :
+constantConcurrentUsers(10) during(10 minutes) // 10 users for 10 minutes
+rampConcurrentUsers(10) to(20) during(10 minutes) // 10 to 20 users for 10 minutes
+
+Open Workload Model : Gatling will keep adding users to the system until the maximum number of users is reached.        
+Examples :
+heavisideUsers(1000) during(20 minutes) // 1000 users for 20 minutes
+rampUsersPerSec(10) to(20) during(10 minutes) // 10 to 20 users per second for 10 minutes
+
+
+
+
+
+Adding Simulation to gatling script
+Execute via Standalone or build tools
+Test Results Reports
