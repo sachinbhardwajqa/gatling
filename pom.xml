@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.softprax</groupId>
+  <artifactId>gatling</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>gatling</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.release>11</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <gatling.version>3.13.5</gatling.version>
+    <gatling-maven-plugin.version>4.16.2</gatling-maven-plugin.version>
+    <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
+    <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
+    <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.gatling</groupId>
+      <artifactId>gatling-core</artifactId>
+      <version>${gatling.version}</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/io.gatling/gatling-core-java -->
+    <dependency>
+      <groupId>io.gatling</groupId>
+      <artifactId>gatling-core-java</artifactId>
+      <version>${gatling.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.gatling.highcharts</groupId>
+      <artifactId>gatling-charts-highcharts</artifactId>
+      <version>${gatling.version}</version>
+      <!--            <scope>test</scope>-->
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>io.gatling</groupId>
+        <artifactId>gatling-maven-plugin</artifactId>
+        <version>${gatling-maven-plugin.version}</version>
+        <configuration>
+          <runMultipleSimulations>false</runMultipleSimulations>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
