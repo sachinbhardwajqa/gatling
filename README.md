@@ -1,12 +1,12 @@
-Gatling 
+Gatling  
 
-Supported Languages : Java, Kotlin, Scala
-Used Java Version : Java 11
-Gatling is an open-source load testing framework based on Scala, Akka and Netty. It is designed for ease of use, maintainability and high performance. Gatling is suitable for performance testing of web applications, APIs and microservices. It is a powerful tool that can simulate hundreds of thousands of users with minimal hardware requirements.
+Supported Languages : Java, Kotlin, Scala   
+Used Java Version : Java 11     
+Gatling is an open-source load testing framework based on Scala, Akka and Netty. It is designed for ease of use, maintainability and high performance. Gatling is suitable for performance testing of web applications, APIs and microservices. It is a powerful tool that can simulate hundreds of thousands of users with minimal hardware requirements.      
 
-Gatling provides a powerful DSL for creating test scenarios. It supports HTTP, WebSockets, Server-Sent Events, JMS and JDBC protocols. Gatling can be integrated with build tools like Maven and Gradle. It generates detailed reports in HTML format that can be used to analyze the test results.
+Gatling provides a powerful DSL for creating test scenarios. It supports HTTP, WebSockets, Server-Sent Events, JMS and JDBC protocols. Gatling can be integrated with build tools like Maven and Gradle. It generates detailed reports in HTML format that can be used to analyze the test results.     
 
-Gatling is a popular choice for performance testing due to its scalability, flexibility and extensibility. It is widely used by developers, testers and DevOps engineers to ensure the performance and reliability of their applications.
+Gatling is a popular choice for performance testing due to its scalability, flexibility and extensibility. It is widely used by developers, testers and DevOps engineers to ensure the performance and reliability of their applications.       
 
 Key Features of Gatling:
 
@@ -48,5 +48,13 @@ Run :
 mvn clean
 Run mvn clean test-compile gatling:test
 mvn clean test-compile gatling:test -Dgatling.simulationClass=perf.gatling.tests.<directoryOfProject>.<simulationClass>
+
+Gatling supported protocol list below
+HTTP
+WebSockets
+Server-Sent Events
+JMS
+JDBC
+
 
 
