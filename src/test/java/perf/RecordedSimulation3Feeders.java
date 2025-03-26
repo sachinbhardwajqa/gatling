@@ -92,7 +92,7 @@ public class RecordedSimulation3Feeders extends Simulation {
 //  --data-raw 'name=Manisha&introduced=2023-12-12&discontinued=2024-12-12&company=1'
     private ScenarioBuilder admins = scenario("RecordedSimulation1 for Admin")
             .exec(
-//                    getDataFromComputerDatabase, getDetailsFromComputerDatabase, browse,
+                    getDataFromComputerDatabase, getDetailsFromComputerDatabase, browse,
                     createNewComputerInComputerDatabase);
 
     private ScenarioBuilder users = scenario("RecordedSimulation1 for Users")
@@ -100,7 +100,7 @@ public class RecordedSimulation3Feeders extends Simulation {
 
     {
         setUp(admins.injectOpen(atOnceUsers(3))
-//                ,users.injectOpen(atOnceUsers(3)))
-                .protocols(httpProtocol));
+                ,users.injectOpen(atOnceUsers(3)))
+                .protocols(httpProtocol);
     }
 }
