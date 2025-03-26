@@ -44,17 +44,21 @@ Below is the high level comparison with other tools like JMeter, LoadRunner, K6,
 Gatling Installation and Setup on Mac with Maven and IntelliJ IDEA
 Check first commit 
 
-Run :
-mvn clean
-Run mvn clean test-compile gatling:test
-mvn clean test-compile gatling:test -Dgatling.simulationClass=perf.gatling.tests.<directoryOfProject>.<simulationClass>
+Run using :
+- mvn clean               // Clean the project
+- mvn clean test-compile gatling:test      // Run the Gatling test
+- mvn clean test-compile gatling:test -Dgatling.simulationClass=perf.gatling.tests.<directoryOfProject>.<simulationClass>     // Run the specific Gatling test
 
 Gatling supported protocol list below
-HTTP
-WebSockets
-Server-Sent Events
-JMS
-JDBC
+- HTTP        
+- WebSockets      
+- Server-Sent Events      
+- JMS     
+- JDBC        
 
+Every gatling script consist of three distinct parts 
+- HttpProtocolBuilder ( Base URL, Base Settings, Headers, Encoding etc. )
+- ScenarioBuilder ( These are the actual steps which need to be performed )
+- setUp  ( Load Simulation Design)
 
 
