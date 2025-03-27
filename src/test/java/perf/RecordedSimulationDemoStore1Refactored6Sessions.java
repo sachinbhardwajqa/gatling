@@ -20,7 +20,7 @@ public class RecordedSimulationDemoStore1Refactored6Sessions extends Simulation 
     private static final ChainBuilder initSession =
             exec(flushCookieJar())
                     .exec(session -> session.set("randomNumber", ThreadLocalRandom.current().nextInt()))
-                    .exec(session -> session.set("customerLoggeedIn",false))
+                    .exec(session -> session.set("customerLoggedIn",false))
                     .exec(session -> session.set("cartTotal",0))
                     .exec(addCookie(Cookie("sessionID", SessionId.random()).withDomain(DOMAIN)));
 
