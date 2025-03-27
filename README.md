@@ -61,7 +61,7 @@ Every gatling script consist of three distinct parts
 - ScenarioBuilder ( These are the actual steps which need to be performed )
 - setUp  ( Load Simulation Design)
 
-Feeders in Gatling (While reading the data, either of # or $ can be used to access the data, Syntax : ${columnName} or #{columnName} )
+Feeders in Gatling (While reading the data - use # though $ still supported for backward compatibility, either of # or $ can be used to access the data, Syntax : ${columnName} or #{columnName} )
 
 CSV Feeder ( CSV file with data )       
 Syntax Example :        
@@ -80,9 +80,18 @@ heavisideUsers(1000) during(20 minutes) // 1000 users for 20 minutes
 rampUsersPerSec(10) to(20) during(10 minutes) // 10 to 20 users per second for 10 minutes
 
 
+------------------------------
+https://demostore.gatling.io/ - Demo Store Application
 
 
+Checks in Gatling   
+Feeders in Gatling      
+Session API in Gatling      
+Cookies in Gatling
+Custom Code in Gatling      
+Refactoring in Gatling      
 
-Adding Simulation to gatling script
-Execute via Standalone or build tools
-Test Results Reports
+
+Load Testing Simulation Design in Gatling
+------------------------------
+
