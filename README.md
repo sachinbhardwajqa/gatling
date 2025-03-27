@@ -104,7 +104,8 @@ Parameterization
 Session API     
 
 ------------------------------
-Using system properties
+**Clone and Run using below command - change numbers as needed.**
+
 mvn clean test-compile gatling:test -Dgatling.simulationClass=simulation.SimulationDemoStore4UserJourneys -DUSERS=2 -DRAMP_DURATION=20 -DTEST_DURATION=30
 
 
