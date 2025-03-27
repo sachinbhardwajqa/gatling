@@ -1,7 +1,5 @@
 Gatling  
-
-Supported Languages : Java, Kotlin, Scala   
-Used Java Version : Java 11     
+   
 Gatling is an open-source load testing framework based on Scala, Akka and Netty. It is designed for ease of use, maintainability and high performance. Gatling is suitable for performance testing of web applications, APIs and microservices. It is a powerful tool that can simulate hundreds of thousands of users with minimal hardware requirements.      
 
 Gatling provides a powerful DSL for creating test scenarios. It supports HTTP, WebSockets, Server-Sent Events, JMS and JDBC protocols. Gatling can be integrated with build tools like Maven and Gradle. It generates detailed reports in HTML format that can be used to analyze the test results.     
@@ -40,6 +38,10 @@ Below is the high level comparison with other tools like JMeter, LoadRunner, K6,
 | **Pros**              | Customizable DSL, detailed reporting, scalable, open-source | Extensive protocol support, beginner-friendly, plugin-rich | Robust, enterprise-grade features, extensive protocol support | Modern, lightweight, simple API, cloud-native | Easy to use, real-time monitoring, scalable with Python |
 | **Cons**              | Requires programming skills, limited protocol support beyond core features | Resource intensive at scale, complex advanced scenarios, basic reporting without plugins | Expensive, steep learning curve, requires professional training | Limited protocol support, less advanced reporting options, smaller ecosystem | Limited protocol support, less out-of-the-box reporting, additional coding may be required |
 
+
+**Specific to this project :**
+Supported Languages : Java, Kotlin, Scala   
+Used Java Version : Java 11  
 
 Gatling Installation and Setup on Mac with Maven and IntelliJ IDEA
 Check first commit to start from basic setup
