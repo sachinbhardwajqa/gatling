@@ -1,5 +1,6 @@
-package perf;
+package scripting;
 
+import base.SessionId;
 import io.gatling.javaapi.core.ChainBuilder;
 import io.gatling.javaapi.core.FeederBuilder;
 import io.gatling.javaapi.core.ScenarioBuilder;
@@ -11,7 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.*;
 
-public class RecordedSimulationDemoStore1Refactored7LoginRefactor extends Simulation {
+public class RecordedSimulationDemoStore1Refactored6Sessions extends Simulation {
     private static final String DOMAIN = "demostore.gatling.io";
     private static final HttpProtocolBuilder HTTP_PROTOCOL = http.baseUrl("https://" + DOMAIN);
     private static final FeederBuilder<String> csvFeederCategoryFeeder = csv("data/categoryDetails.csv").circular();
@@ -65,30 +66,15 @@ public class RecordedSimulationDemoStore1Refactored7LoginRefactor extends Simula
                         .exec(http("Load Login Page for #{username}")
                                 .get("/login")
                                 .check(substring("Username:")))
-                        .exec(
-                                session -> {
-                                    System.out.println("Customer logged in: " + session.get("customerLoggedIn").toString());
-                                    return session;
-                                }
-                        )
                         .exec(http("Customer Login Action with #{username}")
                                 .post("/login")
                                 .formParam("_csrf", "#{csrfValue}")
                                 .formParam("username", "#{username}")
-                                .formParam("password", "#{password}"))
-                        .exec(session -> session.set("customerLoggedIn", true))
-                        .exec(
-                                session -> {
-                                    System.out.println("Customer logged in: " + session.get("customerLoggedIn").toString());
-                                    return session;
-                                }
-                        );
+                                .formParam("password", "#{password}"));
     }
     private static class Checkout {
         private static final ChainBuilder viewCart =
-                doIf(session -> !session.getBoolean("customerLoggedIn"))
-                        .then(exec(Customer.login))
-                        .exec(http("View Cart")
+                exec(http("View Cart")
                         .get("/cart/view"));
         private static final ChainBuilder checkout =
                         exec(http("Checkout")
@@ -108,9 +94,12 @@ public class RecordedSimulationDemoStore1Refactored7LoginRefactor extends Simula
             .pause(2)
             .exec(Checkout.viewCart)
             .pause(3)
+            .exec(Customer.login)
+            .pause(2)
             .exec(Checkout.checkout)
             .pause(3)
             ;
+
     {
         setUp(scn.injectOpen(atOnceUsers(4))).protocols(HTTP_PROTOCOL);
     }

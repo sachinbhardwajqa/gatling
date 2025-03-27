@@ -1,4 +1,4 @@
-package perf;
+package scripting;
 
 import java.util.*;
 
@@ -37,7 +37,7 @@ public class RecordedSimulationDemoStore1b extends Simulation {
       http("RecordedSimulation2_0:GET_https://computer-database.gatling.io/computers")
         .get("/computers")
         .headers(headers_0)
-        .check(bodyBytes().is(RawFileBody("perf/recordedsimulation2/0000_response.html")))
+        .check(bodyBytes().is(RawFileBody("scripting/recordedsimulation2/0000_response.html")))
     );
 
   {

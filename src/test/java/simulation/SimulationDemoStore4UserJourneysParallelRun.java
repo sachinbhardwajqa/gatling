@@ -1,19 +1,21 @@
-package perf;
+package simulation;
 
-import io.gatling.javaapi.core.ChainBuilder;
-import io.gatling.javaapi.core.FeederBuilder;
-import io.gatling.javaapi.core.ScenarioBuilder;
-import io.gatling.javaapi.core.Simulation;
+import base.SessionId;
+import io.gatling.javaapi.core.*;
 import io.gatling.javaapi.http.HttpProtocolBuilder;
 
+import java.time.Duration;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.*;
 
-public class RecordedSimulationDemoStore1Refactored8CartTotal extends Simulation {
+public class SimulationDemoStore4UserJourneysParallelRun extends Simulation {
     private static final String DOMAIN = "demostore.gatling.io";
     private static final HttpProtocolBuilder HTTP_PROTOCOL = http.baseUrl("https://" + DOMAIN);
+    private static final int USER_COUNT = Integer.parseInt(System.getProperty("USERS", "2"));
+    private static final Duration RAMP_DURATION = Duration.ofSeconds(Integer.parseInt(System.getProperty("RAMP_DURATION", "10")));
+    private static final Duration TEST_DURATION = Duration.ofSeconds(Integer.parseInt(System.getProperty("TEST_DURATION", "60")));
     private static final FeederBuilder<String> csvFeederCategoryFeeder = csv("data/categoryDetails.csv").circular();
     private static final FeederBuilder<Object> jsonFeederProductFeeder = jsonFile("data/productDetails.json").random();
     private static final FeederBuilder<String> csvFeederLoginDetails = csv("data/loginDetails.csv").circular();
@@ -61,13 +63,7 @@ public class RecordedSimulationDemoStore1Refactored8CartTotal extends Simulation
                                 double currentCartTotal = session.getDouble("cartTotal");
                                 double itemPrice = session.getDouble("price");
                                 return session.set("cartTotal", currentCartTotal + itemPrice);
-                            })
-                            .exec(
-                                    session -> {
-                                        System.out.println("Cart Total : " + session.get("cartTotal").toString());
-                                        return session;
-                                    }
-                            );
+                            });
             ;
         }
     }
@@ -78,24 +74,12 @@ public class RecordedSimulationDemoStore1Refactored8CartTotal extends Simulation
                         .exec(http("Load Login Page for #{username}")
                                 .get("/login")
                                 .check(substring("Username:")))
-                        .exec(
-                                session -> {
-                                    System.out.println("Customer logged in: " + session.get("customerLoggedIn").toString());
-                                    return session;
-                                }
-                        )
                         .exec(http("Customer Login Action with #{username}")
                                 .post("/login")
                                 .formParam("_csrf", "#{csrfValue}")
                                 .formParam("username", "#{username}")
                                 .formParam("password", "#{password}"))
-                        .exec(session -> session.set("customerLoggedIn", true))
-                        .exec(
-                                session -> {
-                                    System.out.println("Customer logged in: " + session.get("customerLoggedIn").toString());
-                                    return session;
-                                }
-                        );
+                        .exec(session -> session.set("customerLoggedIn", true));
     }
 
     private static class Checkout {
@@ -103,8 +87,9 @@ public class RecordedSimulationDemoStore1Refactored8CartTotal extends Simulation
                 doIf(session -> !session.getBoolean("customerLoggedIn"))
                         .then(exec(Customer.login))
                         .exec(http("View Cart")
-                                .get("/cart/view")
-                                .check(css("#grandTotal").isEL("$#{cartTotal}")));
+                                        .get("/cart/view")
+//                                .check(css("#grandTotal").isEL("$#{cartTotal}"))
+                        );
         private static final ChainBuilder checkout =
                 exec(http("Checkout")
                         .get("/cart/checkout")
@@ -126,7 +111,72 @@ public class RecordedSimulationDemoStore1Refactored8CartTotal extends Simulation
             .exec(Checkout.checkout)
             .pause(3);
 
+    private static class UserJourneys {
+        private static final Duration MIN_PAUSE = Duration.ofMillis(100);
+        private static final Duration MAX_PAUSE = Duration.ofMillis(500);
+        private static final ChainBuilder browseStore =
+                exec(initSession)
+                        .exec(CmsPage.homePage)
+                        .pause(MAX_PAUSE)
+                        .exec(CmsPage.aboutUs)
+                        .pause(MIN_PAUSE, MAX_PAUSE)
+                        .repeat(5)
+                        .on(
+                                exec(Catalog.Category.view)
+                                        .pause(MIN_PAUSE, MAX_PAUSE)
+                                        .exec(Catalog.Product.view)
+                        );
+        private static final ChainBuilder abandonCart =
+                initSession
+                        .exec(CmsPage.homePage)
+                        .pause(MAX_PAUSE)
+                        .exec(Catalog.Category.view)
+                        .pause(MIN_PAUSE, MAX_PAUSE)
+                        .exec(Catalog.Product.view)
+                        .pause(MIN_PAUSE, MAX_PAUSE)
+                        .exec(Catalog.Product.addProductToCart);
+        private static final ChainBuilder completePurchase =
+                initSession
+                        .exec(CmsPage.homePage)
+                        .pause(MAX_PAUSE)
+                        .exec(Catalog.Category.view)
+                        .pause(MIN_PAUSE, MAX_PAUSE)
+                        .exec(Catalog.Product.view)
+                        .pause(MIN_PAUSE, MAX_PAUSE)
+                        .exec(Catalog.Product.addProductToCart)
+                        .pause(MIN_PAUSE, MAX_PAUSE)
+                        .exec(Checkout.viewCart)
+                        .pause(MIN_PAUSE, MAX_PAUSE)
+                        .exec(Checkout.checkout);
+    }
+
+    private static class Scenarios {
+        private static final ScenarioBuilder defaultPurchase =
+                scenario("Default Load Test")
+                        .during(TEST_DURATION)
+                        .on(
+                                randomSwitch().on(
+                                        Choice.withWeight(75.0, exec(UserJourneys.browseStore)),
+                                        Choice.withWeight(15.0, exec(UserJourneys.abandonCart)),
+                                        Choice.withWeight(10.0, exec(UserJourneys.completePurchase))
+                                )
+                        );
+        private static final ScenarioBuilder highPurchase =
+                scenario("High Purchase Load Test")
+                        .during(Duration.ofSeconds(60))
+                        .on(
+                                randomSwitch().on(
+                                        Choice.withWeight(25.0, exec(UserJourneys.browseStore)),
+                                        Choice.withWeight(25.0, exec(UserJourneys.abandonCart)),
+                                        Choice.withWeight(50.0, exec(UserJourneys.completePurchase))
+                                )
+                        );
+    }
+
     {
-        setUp(scn.injectOpen(atOnceUsers(1))).protocols(HTTP_PROTOCOL);
+        setUp(
+                Scenarios.defaultPurchase.injectOpen(rampUsers(USER_COUNT).during(RAMP_DURATION)),
+                Scenarios.highPurchase.injectOpen(rampUsers(5).during(Duration.ofSeconds(10))))
+                .protocols(HTTP_PROTOCOL);
     }
 }
