@@ -42,7 +42,11 @@ Below is the high level comparison with other tools like JMeter, LoadRunner, K6,
 
 
 Gatling Installation and Setup on Mac with Maven and IntelliJ IDEA
-Check first commit 
+Check first commit to start from basic setup
+------------
+Dependencies : gatling-core, gatling-core-java, gatling-charts-highcharts
+Plugin : gatling-maven-plugin
+------------
 
 Run using :
 - mvn clean               // Clean the project
@@ -93,4 +97,8 @@ Refactoring in Gatling
 
 Load Testing Simulation Design in Gatling
 ------------------------------
+Static Variables    
+Selectors to capture Data       
+Parameterization        
+Session API     
 
