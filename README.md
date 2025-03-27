@@ -61,8 +61,7 @@ Every gatling script consist of three distinct parts
 - ScenarioBuilder ( These are the actual steps which need to be performed )
 - setUp  ( Load Simulation Design)
 
-Feeders in Gatling (While reading the data - use # though $ still supported for backward compatibility, either of # or $ can be used to access the data, Syntax : ${columnName} or #{columnName} )
-
+Feeders in Gatling (Use `#` or `$` to access data. Syntax: `${columnName}` or `#{columnName}`)
 CSV Feeder ( CSV file with data )       
 Syntax Example :        
 FeederBuilder.Batchable feeder1 = csv("filename.csv").circular(), csv("filename.csv").random()
