@@ -81,7 +81,6 @@ rampConcurrentUsers(10) to(20) during(10 minutes) // 10 to 20 users for 10 minut
 
 Open Workload Model : Gatling will keep adding users to the system until the maximum number of users is reached.        
 Examples :
-heavisideUsers(1000) during(20 minutes) // 1000 users for 20 minutes
 rampUsersPerSec(10) to(20) during(10 minutes) // 10 to 20 users per second for 10 minutes
 
 
