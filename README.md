@@ -61,7 +61,7 @@ Gatling supported protocol list below
 - JDBC        
 
 Every gatling script consist of three distinct parts 
-- HttpProtocolBuilder ( base.Base URL, base.Base Settings, Headers, Encoding etc. )
+- HttpProtocolBuilder ( Base URL, Base Settings, Headers, Encoding etc. )
 - ScenarioBuilder ( These are the actual steps which need to be performed )
 - setUp  ( Load Simulation Design)
 
