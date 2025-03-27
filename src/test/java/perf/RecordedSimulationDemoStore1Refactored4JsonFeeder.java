@@ -34,7 +34,7 @@ public class RecordedSimulationDemoStore1Refactored4JsonFeeder extends Simulatio
                             .repeat(2, "n").on(
                                     exec(http("View #{n} Category - #{categoryName}")
                                             .get("/category/#{categorySlug}")
-                                            .check(css("#CategoryName").isEL("${categoryName}")))); // EL = Expression Language
+                                            .check(css("#CategoryName").isEL("#{categoryName}")))); // EL = Expression Language
         }
 
         private static class Product {
