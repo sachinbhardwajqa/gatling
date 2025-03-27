@@ -1,17 +1,14 @@
 package perf;
 
-import java.time.Duration;
 import java.util.*;
 
 import io.gatling.javaapi.core.*;
 import io.gatling.javaapi.http.*;
-import io.gatling.javaapi.jdbc.*;
 
 import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.*;
-import static io.gatling.javaapi.jdbc.JdbcDsl.*;
 
-public class RecordedSimulationDemoStore1 extends Simulation {
+public class RecordedSimulationDemoStore1c extends Simulation {
 
   private HttpProtocolBuilder httpProtocol = http
     .baseUrl("https://demostore.gatling.io")
