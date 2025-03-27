@@ -10,7 +10,7 @@ import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.http;
 import static io.gatling.javaapi.http.HttpDsl.status;
 
-public class RecordedSimulation4Simulations extends Simulation {
+public class RecordedSimulationDemoStore1dSimulations extends Simulation {
 
     private HttpProtocolBuilder httpProtocol = http
             .baseUrl("https://computer-database.gatling.io")
