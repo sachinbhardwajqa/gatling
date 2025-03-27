@@ -61,7 +61,7 @@ Gatling supported protocol list below
 - JDBC        
 
 Every gatling script consist of three distinct parts 
-- HttpProtocolBuilder ( Base URL, Base Settings, Headers, Encoding etc. )
+- HttpProtocolBuilder ( base.Base URL, base.Base Settings, Headers, Encoding etc. )
 - ScenarioBuilder ( These are the actual steps which need to be performed )
 - setUp  ( Load Simulation Design)
 
@@ -101,4 +101,10 @@ Static Variables
 Selectors to capture Data       
 Parameterization        
 Session API     
+
+------------------------------
+Using system properties
+mvn clean test-compile gatling:test -Dgatling.simulationClass=simulation.SimulationDemoStore4UserJourneys -DUSERS=2 -DRAMP_DURATION=20 -DTEST_DURATION=30
+
+
 

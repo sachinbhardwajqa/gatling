@@ -1,4 +1,4 @@
-package perf;
+package scripting;
 
 import java.util.*;
 

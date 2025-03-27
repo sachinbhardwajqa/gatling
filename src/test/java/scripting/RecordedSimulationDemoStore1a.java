@@ -1,4 +1,4 @@
-package perf;
+package scripting;
 
 import io.gatling.javaapi.core.ChainBuilder;
 import io.gatling.javaapi.core.ScenarioBuilder;
