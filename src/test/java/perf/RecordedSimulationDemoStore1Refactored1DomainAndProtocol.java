@@ -7,7 +7,7 @@ import io.gatling.javaapi.http.HttpProtocolBuilder;
 import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.http;
 
-public class RecordedSimulationDemoStore1Refactored1 extends Simulation {
+public class RecordedSimulationDemoStore1Refactored1DomainAndProtocol extends Simulation {
   private static final String DOMAIN = "demostore.gatling.io";
   private static final HttpProtocolBuilder HTTP_PROTOCOL = http.baseUrl("https://" + DOMAIN);
   private static final ScenarioBuilder scn = scenario("RecordedSimulationDemoStore1")
