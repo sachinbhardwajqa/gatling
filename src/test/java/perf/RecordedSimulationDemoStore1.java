@@ -113,7 +113,6 @@ public class RecordedSimulationDemoStore1 extends Simulation {
           http("RecordedSimulationDemoStore1_8:GET_https://demostore.gatling.io/cart/checkoutConfirmation")
             .get("/cart/checkoutConfirmation")
             .headers(headers_7)
-//            .check(bodyBytes().is(RawFileBody("perf/recordedsimulationdemostore1/0007_response.html")))
         )
     );
 
